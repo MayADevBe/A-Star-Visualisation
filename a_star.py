@@ -4,6 +4,9 @@ class PriorityQueue():
     def __init__(self):
         self.queue = []
     
+    def __str__(self):
+        return ' '.join([str(i) for i in self.queue])
+    
     def is_empty(self):
         return len(self.queue) == 0
 
@@ -13,6 +16,7 @@ class PriorityQueue():
             p, c = self.queue[i]
             if c == coordinate:
                 del self.queue[i]
+                break
         self.queue.append((priority, coordinate))
     
     def get_priority(self, coordinate):
@@ -44,6 +48,11 @@ class PriorityQueue():
         del self.queue[min]
         return data
 
+    def in_list(self, coordinate):
+        if coordinate in self.queue:
+            return True
+        return False
+
 
 class Neighbours:
     '''Get neighbouring tiles'''
@@ -64,8 +73,8 @@ class Neighbours:
     def get_neighbours(self, coordinate):
         (x, y) = coordinate
         result = [(x+1, y), (x, y+1), (x-1, y), (x, y-1)]
-        result = filter(self.on_board, result)
-        result = filter(self.no_wall, result)
+        result = list(filter(self.on_board, result))
+        result = list(filter(self.no_wall, result))
         return result
     
     def cost(self, from_node, to_node):
@@ -78,6 +87,7 @@ class AStar:
     def __init__(self, start, goal, width, height, walls):
         self.openlist = PriorityQueue()
         self.openlist.insert(start, 0)
+        print(f"In Init openlist: {self.openlist.queue}")
         self.closedlist = []
         self.precessor = {}
         self.start = start
@@ -94,26 +104,30 @@ class AStar:
     def neighbours_to_open_list(self, curr):
         p, c = curr
         neighbours = self.neighbours.get_neighbours(c)
+        print(f"Neighbours: {neighbours}")
         for neighbour in neighbours:
             if not neighbour in self.closedlist: # if neighbour wasn't visited before
+                print(f"{neighbour} not in closedlist")
                 p, c = curr
                 n_cost_g = p + self.neighbours.cost(c, neighbour)
                 n_priority = self.openlist.get_priority(c) # if coordinate already in list + the priority else None
-                if not n_priority == None and n_priority > n_cost_g:
+                print(f"Priority: {n_priority}")
+                if n_priority == None or n_priority > n_cost_g:
                     n_cost_f = n_cost_g + self.heuristic(neighbour)
                     self.openlist.insert(neighbour, n_cost_f)
-                    self.precessor[neighbour] = curr
+                    self.precessor[f"{neighbour}"] = c
 
     def search(self):
         while not self.openlist.is_empty():
+            print(f"Search Start openlist: {self.openlist.queue}")
             curr = self.openlist.get_min()
             p, c = curr
-            print(self.closedlist)
             if c == self.goal:
                 return p
             self.closedlist.append(c)
-
+            print(f"Search closedlist: {self.closedlist}")
             self.neighbours_to_open_list(curr)
+            print(f"Search End openlist: {self.openlist.queue}")
             
         #couldn't find path
         return None
@@ -123,7 +137,7 @@ class AStar:
         path = []
         while curr != self.start:
             path.append(curr)
-            curr = self.precessor[curr]
+            curr = self.precessor[f"{curr}"]
         path.append(self.start)
         path.reverse()
         return path

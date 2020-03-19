@@ -15,17 +15,19 @@ class Board:
     def draw(self):
         for i in range(self.columns):
             for j in range(self.rows):
-                self.platform.create_rectangle(i*self.width, j*self.width, (i+1)*self.width, (j+1)*self.width, fill="white", width=1)
+                self.platform.create_rectangle(i*self.width, j*self.width, (i+1)*self.width, (j+1)*self.width, fill="white")
         
     def draw_coordinates(self, coordinate_list, color):
-        for (i,j) in coordinate_list:
-            self.platform.create_rectangle(i*self.width, j*self.width, (i+1)*self.width, (j+1)*self.width, fill=color, width=1)
+        for i, j in coordinate_list:
+            self.platform.create_rectangle(i*self.width, j*self.width, (i+1)*self.width, (j+1)*self.width, fill=color)
 
-    def start(self):
+    def start(self, drawfunc, path):
         self.draw()
+        drawfunc(self, path)
         self.window.mainloop()
 
 # R_C = 25 #Rows and Columns
 # W_H = 20 #Width and Height
 # board = Board("Test", R_C, R_C, W_H)
+
 # board.start()
