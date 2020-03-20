@@ -1,6 +1,5 @@
 import threading
 import time
-import random
 from board import Board
 from a_star import AStar
 
@@ -11,16 +10,6 @@ goal = (24,24)
 walls = []
 
 cost = None
-
-def random_search():
-    global start, end, walls
-    start = (random.randint(0, R_C-1), random.randint(0, R_C-1))
-    end = (random.randint(0, R_C-1), random.randint(0, R_C-1))
-    for i in range(random.randint(0, (R_C*R_C))):
-        wall = (random.randint(0, R_C-1), random.randint(0, R_C-1))
-        if not wall == start and not wall == goal:
-            if not wall in walls:
-                walls.append(wall)
 
 def starThread():
     global a_star, cost#, path
@@ -55,7 +44,6 @@ def draw_path():
 
 board = Board("A*-Algorithm", R_C, R_C, W_H )
 
-random_search()
 a_star = AStar(start, goal, R_C, R_C, walls)
 
 t2 = threading.Thread(target=starThread)
