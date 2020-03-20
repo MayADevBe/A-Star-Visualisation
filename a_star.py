@@ -100,8 +100,8 @@ class AStar:
     def heuristic(self, coordinate):
         cx, cy = coordinate
         gx, gy = self.goal
-        dx = (cx - gx) ** 2
-        dy = (cy - gy) ** 2
+        dx = (gx - cx) ** 2
+        dy = (gy - cy) ** 2
         return sqrt(dx+dy)
 
     def neighbours_to_open_list(self, curr):
