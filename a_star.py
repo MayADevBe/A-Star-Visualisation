@@ -90,6 +90,7 @@ class AStar:
         print(f"In Init openlist: {self.openlist.queue}")
         self.closedlist = []
         self.precessor = {}
+        self.path = []
         self.start = start
         self.goal = goal
         self.neighbours = Neighbours(width, height, walls)
@@ -124,16 +125,16 @@ class AStar:
             p, c = curr
             if c == self.goal:
                 return p
+            self.path = self.get_path(c)
             self.closedlist.append(c)
             print(f"Search closedlist: {self.closedlist}")
             self.neighbours_to_open_list(curr)
             print(f"Search End openlist: {self.openlist.queue}")
             
         #couldn't find path
-        return None
-    
-    def get_path(self):
-        curr = self.goal
+        return -1
+
+    def get_path(self, curr):
         path = []
         while curr != self.start:
             path.append(curr)
