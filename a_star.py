@@ -1,3 +1,5 @@
+import time
+
 class PriorityQueue():
     '''Implements simple PriorityQueue'''
 
@@ -87,7 +89,6 @@ class AStar:
     def __init__(self, start, goal, width, height, walls):
         self.openlist = PriorityQueue()
         self.openlist.insert(start, 0)
-        print(f"In Init openlist: {self.openlist.queue}")
         self.closedlist = []
         self.precessor = {}
         self.path = []
@@ -105,14 +106,11 @@ class AStar:
     def neighbours_to_open_list(self, curr):
         p, c = curr
         neighbours = self.neighbours.get_neighbours(c)
-        print(f"Neighbours: {neighbours}")
         for neighbour in neighbours:
             if not neighbour in self.closedlist: # if neighbour wasn't visited before
-                print(f"{neighbour} not in closedlist")
                 p, c = curr
                 n_cost_g = p + self.neighbours.cost(c, neighbour)
                 n_priority = self.openlist.get_priority(c) # if coordinate already in list + the priority else None
-                print(f"Priority: {n_priority}")
                 if n_priority == None or n_priority > n_cost_g:
                     n_cost_f = n_cost_g + self.heuristic(neighbour)
                     self.openlist.insert(neighbour, n_cost_f)
@@ -120,17 +118,17 @@ class AStar:
 
     def search(self):
         while not self.openlist.is_empty():
-            print(f"Search Start openlist: {self.openlist.queue}")
             curr = self.openlist.get_min()
             p, c = curr
             if c == self.goal:
+                self.path = self.get_path(c)
+                print(f"Path-last: {self.path}") 
                 return p
             self.path = self.get_path(c)
             self.closedlist.append(c)
-            print(f"Search closedlist: {self.closedlist}")
             self.neighbours_to_open_list(curr)
-            print(f"Search End openlist: {self.openlist.queue}")
-            
+            time.sleep(0.01)
+                   
         #couldn't find path
         return -1
 
