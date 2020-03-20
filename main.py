@@ -21,7 +21,7 @@ a_star = AStar(start, goal, W_H , W_H , walls)
 
 def starThread():
     print("A* Thread started")
-    global a_star, cost
+    global a_star, cost, path
     cost = a_star.search()
     if not cost == None:
         path = a_star.get_path()
@@ -29,24 +29,26 @@ def starThread():
     else:
         path = [start]
         print("No Path")
-    return path
+    #return path
 
-def draw_path(board, path):
-     #global a_star, board
-     print("Drawing Thread started")
-     print(f"Draw_Path {a_star.openlist.queue}")
-     print(f"Draw_Path {[a_tuple[1] for a_tuple in a_star.openlist.queue]}")
-     print(f"Draw_Path {a_star.closedlist}")
-     board.draw_coordinates([a_tuple[1] for a_tuple in a_star.openlist.queue], "green")
-     board.draw_coordinates(a_star.closedlist, "red")
-     board.draw_coordinates(path, "black")
+def draw_path():
+    #global a_star, board
+    global board, path
+    print("Drawing Thread started")
+    print(f"Draw_Path {a_star.openlist.queue}")
+    print(f"Draw_Path {[a_tuple[1] for a_tuple in a_star.openlist.queue]}")
+    print(f"Draw_Path {a_star.closedlist}")
+    board.draw_coordinates([a_tuple[1] for a_tuple in a_star.openlist.queue], "green")
+    board.draw_coordinates(a_star.closedlist, "red")
+    if not path == []:
+        board.draw_coordinates(path, "black")
+    else:
+        board.platform.after(10, draw_path())
 
-# t = threading.Thread(target=starThread)
-# t.daemon = True
-# t2 = threading.Thread(target=draw_path)
-# t2.daemon = True
-# t.start()
-# t2.start()
-path = starThread()
-#draw_path(path)
-board.start(draw_path, path)
+
+starThread()
+t2 = threading.Thread(target=draw_path)
+t2.daemon = True
+t2.start()
+board.start()
+

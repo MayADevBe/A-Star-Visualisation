@@ -21,9 +21,8 @@ class Board:
         for i, j in coordinate_list:
             self.platform.create_rectangle(i*self.width, j*self.width, (i+1)*self.width, (j+1)*self.width, fill=color)
 
-    def start(self, drawfunc, path):
+    def start(self):
         self.draw()
-        drawfunc(self, path)
         self.window.mainloop()
 
 # R_C = 25 #Rows and Columns
