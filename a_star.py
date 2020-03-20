@@ -1,4 +1,5 @@
 import time
+from math import sqrt
 
 class PriorityQueue():
     '''Implements simple PriorityQueue'''
@@ -74,7 +75,7 @@ class Neighbours:
 
     def get_neighbours(self, coordinate):
         (x, y) = coordinate
-        result = [(x+1, y), (x, y+1), (x-1, y), (x, y-1)]
+        result = [(x+1, y), (x, y+1), (x-1, y), (x, y-1), (x+1, y+1), (x-1, y+1), (x-1, y-1), (x+1, y-1)]
         result = list(filter(self.on_board, result))
         result = list(filter(self.no_wall, result))
         return result
@@ -99,9 +100,9 @@ class AStar:
     def heuristic(self, coordinate):
         cx, cy = coordinate
         gx, gy = self.goal
-        dx = abs(cx - gx)
-        dy = abs(cy - gy)
-        return dx+dy
+        dx = (cx - gx) ** 2
+        dy = (cy - gy) ** 2
+        return sqrt(dx+dy)
 
     def neighbours_to_open_list(self, curr):
         p, c = curr
@@ -122,14 +123,14 @@ class AStar:
             p, c = curr
             if c == self.goal:
                 self.path = self.get_path(c)
-                print(f"Path-last: {self.path}") 
+                print(f"Path: {self.path}") 
                 return p
             self.path = self.get_path(c)
             self.closedlist.append(c)
             self.neighbours_to_open_list(curr)
             time.sleep(0.01)
                    
-        #couldn't find path
+        print("Couldn't find path")
         return -1
 
     def get_path(self, curr):

@@ -16,7 +16,7 @@ def random_search():
     global start, end, walls
     start = (random.randint(0, R_C-1), random.randint(0, R_C-1))
     end = (random.randint(0, R_C-1), random.randint(0, R_C-1))
-    for i in range(random.randint(0, 500)):
+    for i in range(random.randint(0, (R_C*R_C))):
         wall = (random.randint(0, R_C-1), random.randint(0, R_C-1))
         if not wall == start and not wall == goal:
             if not wall in walls:
@@ -46,10 +46,8 @@ def draw_path():
     if cost == -1:
         board.draw_coordinates(a_star.path, "red")
         board.draw_coordinates([start, goal], "blue")
-        print("Couldn't find path")
     else:
         board.draw_coordinates(a_star.path, "blue")
-        print(f"Path: {a_star.path}")
 
     board.platform.update()
     time.sleep(0.01)
