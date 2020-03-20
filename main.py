@@ -40,7 +40,8 @@ def draw_path():
         board.platform.update()
         time.sleep(0.01)
 
-    board.draw_coordinates([a_tuple[1] for a_tuple in a_star.openlist.queue], "green")
+    board.draw()
+    #board.draw_coordinates([a_tuple[1] for a_tuple in a_star.openlist.queue], "green")
     board.draw_coordinates(a_star.closedlist, "yellow")
     board.draw_coordinates(walls, "black")
     if cost == -1:

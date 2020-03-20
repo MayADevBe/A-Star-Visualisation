@@ -110,7 +110,7 @@ class AStar:
         for neighbour in neighbours:
             if not neighbour in self.closedlist: # if neighbour wasn't visited before
                 p, c = curr
-                n_cost_g = p + self.neighbours.cost(c, neighbour)
+                n_cost_g = len(self.get_path(c)) + self.neighbours.cost(c, neighbour)
                 n_priority = self.openlist.get_priority(c) # if coordinate already in list + the priority else None
                 if n_priority == None or n_priority > n_cost_g:
                     n_cost_f = n_cost_g + self.heuristic(neighbour)
