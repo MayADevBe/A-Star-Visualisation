@@ -1,2 +1,7 @@
 # A-Star-Algorithm
- A*-Algorithm in Python. Visual
+ A*-Algorithm in Python.
+*Visualizes steps*
+
+
+**NEEDED**
+* Tkinter

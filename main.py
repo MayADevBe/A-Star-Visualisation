@@ -1,6 +1,3 @@
-
-#TODO test a* algo
-
 import threading
 import time
 from board import Board
