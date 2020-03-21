@@ -128,7 +128,7 @@ class AStar:
             self.path = self.get_path(c)
             self.closedlist.append(c)
             self.neighbours_to_open_list(curr)
-            time.sleep(0.01)
+            time.sleep(0.1)
                    
         print("Couldn't find path")
         return -1
