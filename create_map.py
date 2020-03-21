@@ -10,10 +10,8 @@ class MapCreation:
         self.goal = None
         self.R_C = R_C
         self.W_H = W_H
-        self.ready = False
         self.board = board
         board.platform.bind("<Button-1>", self.custom_map)
-        board.platform.bind("<Return>", self.start_search)
         board.platform.focus_set()
 
     def random_map(self):
@@ -50,19 +48,3 @@ class MapCreation:
                 self.board.platform.itemconfig(item, fill='black')
                 self.walls.append((x, y))
             self.board.platform.update()
-
-    def start_search(self, event=None):
-        if not self.ready:
-            if self.start == None or self.goal == None:
-                self.random_map()
-            self.ready = True
-
-# R_C = 25 #Rows and Columns
-# W_H = 20 #Width and Height
-# map_creation = MapCreation(R_C, W_H)
-# board = Board("A*-Algorithm", map_creation.R_C, map_creation.R_C, map_creation.W_H)
-# board.platform.bind("<Button-1>", self.custom_map)
-# board.platform.bind("<Return>", MapCreation.start_search)
-# board.platform.focus_set()
-# board.draw()
-# board.start()

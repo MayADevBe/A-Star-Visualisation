@@ -23,9 +23,3 @@ class Board:
 
     def start(self):
         self.window.mainloop()
-
-# R_C = 25 #Rows and Columns
-# W_H = 20 #Width and Height
-# board = Board("Test", R_C, R_C, W_H)
-
-# board.start()
