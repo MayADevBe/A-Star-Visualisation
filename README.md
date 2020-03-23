@@ -6,10 +6,10 @@
 * diagonal movment
 
 * create own map
-    *first start*
-    *then goal*
-    *then walls*
-    *remove by clicking again*
+   * *first start*
+   * *then goal*
+   * *then walls*
+   * *remove by clicking again*
 * click return to start search
     *if start or goal is missing -> random map*
 * click space to start new search
