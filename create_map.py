@@ -24,27 +24,26 @@ class MapCreation:
                     self.walls.append(wall)
 
     def custom_map(self, event):
-        if not self.ready:
-            item = self.board.platform.find_closest(event.x, event.y)[0]
-            x = floor(event.x/self.W_H)
-            y = floor(event.y/self.W_H)
+        item = self.board.platform.find_closest(event.x, event.y)[0]
+        x = floor(event.x/self.W_H)
+        y = floor(event.y/self.W_H)
 
-            if self.start == None:
-                self.start = (x, y)
-                self.board.platform.itemconfig(item, fill='blue')
-            elif self.goal == None:
-                self.goal = (x, y)
-                self.board.platform.itemconfig(item, fill='blue')
-            elif self.start == (x,y):
-                self.start = None
-                self.board.platform.itemconfig(item, fill='white')
-            elif self.goal == (x,y):
-                self.goal = None
-                self.board.platform.itemconfig(item, fill='white')
-            elif (x, y) in self.walls:
-                self.board.platform.itemconfig(item, fill='white')
-                self.walls.remove((x, y))
-            else:
-                self.board.platform.itemconfig(item, fill='black')
-                self.walls.append((x, y))
-            self.board.platform.update()
+        if self.start == None:
+            self.start = (x, y)
+            self.board.platform.itemconfig(item, fill='blue')
+        elif self.goal == None:
+            self.goal = (x, y)
+            self.board.platform.itemconfig(item, fill='blue')
+        elif self.start == (x,y):
+            self.start = None
+            self.board.platform.itemconfig(item, fill='white')
+        elif self.goal == (x,y):
+            self.goal = None
+            self.board.platform.itemconfig(item, fill='white')
+        elif (x, y) in self.walls:
+            self.board.platform.itemconfig(item, fill='white')
+            self.walls.remove((x, y))
+        else:
+            self.board.platform.itemconfig(item, fill='black')
+            self.walls.append((x, y))
+        self.board.platform.update()

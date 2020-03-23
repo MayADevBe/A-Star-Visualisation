@@ -56,12 +56,25 @@ def start_search(event=None):
 
     draw_path()
 
+def restart(event=None):
+    global cost, walls, goal, start, map_creation, a_star, board
+    
+    if not cost == None:
+        cost = None
+        walls = []
+        start = None
+        goal = None
+        a_star = None
+        map_creation = MapCreation(R_C, W_H, board)
+        board.draw()
+
+
 board = Board("A*-Algorithm", R_C, R_C, W_H)
 board.draw()
 map_creation = MapCreation(R_C, W_H, board)
 board.draw()
 board.platform.bind("<Return>", start_search)
-board.platform.focus_set()
+board.platform.bind("<space>", restart)
 
 board.start()
 

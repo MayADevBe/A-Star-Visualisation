@@ -12,6 +12,7 @@
     *remove by clicking again*
 * click return to start search
     *if start or goal is missing -> random map*
+* click space to start new search
 
 **NEEDED**
 * Tkinter
